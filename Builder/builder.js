@@ -1,7 +1,4 @@
-// const Tag = require('./Tag');
-const words = ['hello', 'world'];
-
-class Tag {
+class HTMLElement {
     static indentSize = 2;
 
     constructor(name = '', text = '') {
@@ -10,25 +7,25 @@ class Tag {
         this.children = [];
     }
 
-    toStringImpl(indent) {
+    format(indent) {
         let html = [];
-        let i = ' '.repeat(indent * Tag.indentSize);
+        let i = ' '.repeat(indent * HTMLElement.indentSize);
         html.push(`${i}<${this.name}>\n`);
         if (this.text.length > 0) {
-            html.push(' '.repeat(Tag.indentSize * (indent + 1)));
+            html.push(' '.repeat(HTMLElement.indentSize * (indent + 1)));
             html.push(this.text);
             html.push('\n');
         }
 
         for (let child of this.children) {
-            html.push(child.toStringImpl(indent + 1));
+            html.push(child.format(indent + 1));
         }
         html.push(`${i}</${this.name}>\n`);
         return html.join('');
     }
 
     toString() {
-        return this.toStringImpl(0);
+        return this.format(0);
     }
 
     static create(name) {
@@ -37,50 +34,45 @@ class Tag {
 }
 
 class HTMLBuilder {
-    constructor(rootName) {
-        this.root = new Tag(rootName);
-        this.rootName = rootName;
+    constructor(element) {
+        this.htmlElement = new HTMLElement(element);
+        this.element = element;
     }
 
-    // non-fluent
     addChild(childName, childText) {
-        let child = new Tag(childName, childText);
-        this.root.children.push(child);
-    }
-
-    // fluent
-    addChildFluent(childName, childText) {
-        let child = new Tag(childName, childText);
-        this.root.children.push(child);
+        let child = new HTMLElement(childName, childText);
+        this.htmlElement.children.push(child);
         return this;
     }
 
     toString() {
-        return this.root.toString();
+        return this.htmlElement.toString();
     }
 
     clear() {
-        this.root = new Tag(this.rootName);
+        this.htmlElement = new HTMLElement(this.element);
     }
 
     build() {
-        return this.root;
+        return this.htmlElement;
     }
 }
 
+const names = ['Shenzi', 'Banzai', 'Ed'];
+let htmlBuilder = HTMLElement.create('ul');
 
 // ordinary non-fluent builder
-let builder = Tag.create('ul');
-for (let word of words) {
-    builder.addChild('li', word);
+for (let name of names) {
+    htmlBuilder.addChild('li', name);
 }
-let tag = builder.build();
-console.log(tag.toString());
+let htmlElement = htmlBuilder.build();
+console.log(htmlElement.toString());
 
-// fluent builder
-builder.clear();
-builder
-    .addChildFluent('li', 'bobby')
-    .addChildFluent('li', 'charlie')
-    .addChildFluent('li', 'lily');
-console.log(builder.toString());
+htmlBuilder.clear();
+
+// fluent builder allowing method chaining
+htmlBuilder
+    .addChild('li', names[0])
+    .addChild('li', names[1])
+    .addChild('li', names[2]);
+console.log(htmlBuilder.toString());
