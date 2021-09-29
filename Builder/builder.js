@@ -12,7 +12,7 @@ class HTMLBuilder {
         this.element = element;
     }
 
-    addChild(childName, childText) {
+    withChild(childName, childText) {
         let child = new HTMLElement(childName, childText);
         this.htmlElement.children.push(child);
         return this;
@@ -24,8 +24,8 @@ class HTMLBuilder {
 }
 
 const htmlElement = new HTMLBuilder('ul')
-    .addChild('li', 'Shenzi')
-    .addChild('li', 'Banzai')
-    .addChild('li', 'Ed')
+    .withChild('li', 'Shenzi')
+    .withChild('li', 'Banzai')
+    .withChild('li', 'Ed')
     .build();
 console.log(htmlElement);

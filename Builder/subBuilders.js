@@ -32,17 +32,17 @@ class PersonAddressBuilder extends PersonBuilder {
         super(person);
     }
 
-    setStreet(streetAddress) {
+    withStreet(streetAddress) {
         this.person.streetAddress = streetAddress;
         return this;
     }
 
-    setCity(city) {
+    withCity(city) {
         this.person.city = city;
         return this;
     }
 
-    setPostcode(postcode) {
+    withPostcode(postcode) {
         this.person.postcode = postcode;
         return this;
     }
@@ -53,24 +53,24 @@ class PersonJobBuilder extends PersonBuilder {
         super(person);
     }
 
-    setCompany(companyName) {
+    withCompany(companyName) {
         this.person.companyName = companyName;
         return this;
     }
 
-    setPosition(position) {
+    withPosition(position) {
         this.person.position = position;
         return this;
     }
 
-    setIncome(annualIncome) {
+    withIncome(annualIncome) {
         this.person.annualIncome = annualIncome;
         return this;
     }
 }
 
 const person = new PersonBuilder()
-    .adressBuilder().setStreet('123 London Road').setCity('London').setPostcode('SW12BC')
-    .jobBuilder().setCompany('Fabrikam').setPosition('Engineer').setIncome(123000)
+    .adressBuilder().withStreet('123 London Road').withCity('London').withPostcode('SW12BC')
+    .jobBuilder().withCompany('Fabrikam').withPosition('Engineer').withIncome(123000)
     .build();
 console.log(person);
