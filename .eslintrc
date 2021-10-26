@@ -1,0 +1,28 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "airbnb-base",
+      "airbnb-typescript/base"
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "rules": {
+      "max-len": [ "warn", { "code": 100 } ],
+      "no-console": "off",
+      "no-new": "off",
+      "max-classes-per-file": "off",
+      "class-methods-use-this": "off",
+      "@typescript-eslint/no-use-before-define": "off",
+      "@typescript-eslint/no-useless-constructor": "off",
+      "@typescript-eslint/lines-between-class-members": "off",
+      "@typescript-eslint/no-non-null-assertion": "off"
+    }
+}
